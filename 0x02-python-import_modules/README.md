@@ -1,1 +1,7 @@
-[README.md](https://github.com/Faitholo/alx-higher_level_programming/files/7140542/README.md)
+Python - import & modules
+Import a simple function from a simple file 
+My first toolbox! 
+How to make a script dynamic! 
+Infinite addition 
+Who are you? 
+Everything can be imported
