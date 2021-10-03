@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-Square = __import__('6-square').Square
+'print(__import__("my_module").my_function.__doc__)'
+python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)')
 
 my_square_1 = Square(3)
 my_square_1.my_print()
