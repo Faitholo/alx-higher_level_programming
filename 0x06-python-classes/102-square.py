@@ -9,11 +9,7 @@ class Square():
             Args:
             size (int): Zero or positve number.
         '''
-        if not isinstance(size, int):
-            raise TypeError("size must be an integer")
-        if size < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = size
+        self.size = size
 
     def area(self):
         '''Calculates the area
@@ -37,3 +33,39 @@ class Square():
         if value < 0:
             raise ValueError("size must be >= 0")
         self.__size = value
+
+    def __lt__(self, other):
+        '''
+            less than <
+        '''
+        return(self.area() < other.area())
+
+    def __le__(self, other):
+        '''
+            less or equal than <=
+        '''
+        return(self.area() <= other.area())
+
+    def __eq__(self, other):
+        '''
+            equal to ==
+        '''
+        return(self.area() == other.area())
+
+    def __ge__(self, other):
+        '''
+            greater or equal than >=
+        '''
+        return(self.area() >= other.area())
+
+    def __gt__(self, other):
+        '''
+            greater than >
+        '''
+        return(self.area() > other.area())
+
+    def __ne__(self, other):
+        '''
+            not equal !=
+        '''
+        return(self.area() != other.area())
