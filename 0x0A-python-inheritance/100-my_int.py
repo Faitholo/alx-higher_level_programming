@@ -1,10 +1,18 @@
 #!/usr/bin/python3
+'''
+    Class that takes an integers
+'''
+
+
 class MyInt(int):
-    def __init__(self, value):
-        self.num = value
+    def __init__(self, number):
+        self.number = number
 
-    def __eq__(self, other):
-        return self.num != other
+    def __ne__(self, val):
+        return (self.number == val)
 
-    def __ne__(self, other):
-        return self.num == other
+    def __eq__(self, val):
+        return (self.number != val)
+
+    def __str__(self):
+        return (str(self.number))
