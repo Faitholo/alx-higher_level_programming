@@ -1,55 +1,140 @@
 #!/usr/bin/python3
-''' First rectangle
 '''
-
+    Class Rectangle
+'''
 from models.base import Base
 
 
 class Rectangle(Base):
-    '''class Rectangle inherits from base
     '''
-    KV_dict = {'id': 'id', 'width': '_Rectangle__width',
-               'height': '_Rectangle__height',
-               'x': '_Rectangle__x', 'y': '_Rectangle__y'}
+        Defining the Rectangle class
+        Inherits from:
+            Base
+    '''
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        '''method __init__ Initialization a Rectangle
-        '''
-        super().__init__(id)
         self.width = width
         self.height = height
         self.x = x
         self.y = y
+        super().__init__(id)
 
-    def update(self, *args, **kwargs):
-        '''method update
+    @property
+    def width(self):
         '''
-        key_list = ['id', '_Rectangle__width', '_Rectangle__height',
-                    '_Rectangle__x', '_Rectangle__y']
-        KV_dict = {'id': 'id', 'width': '_Rectangle__width',
-                   'height': '_Rectangle__height',
-                   'x': '_Rectangle__x', 'y': '_Rectangle__y'}
-        for idx, el in enumerate(args):
-            self.__dict__[key_list[idx]] = el
-        if len(args) == 0:
-            for key, val in kwargs.items():
-                self.__dict__[KV_dict[key]] = val
-
-    def __str__(self):
-        '''method __str__
+            Returning private attribute
         '''
+        return self.__width
 
-        return ("[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.__x,
-                self.__y, self.__width, self.__height))
+    @width.setter
+    def width(self, value):
+        '''
+            Setting private attribute
+        '''
+        self.setter_validation("width", value)
+        self.__width = value
+
+    @property
+    def height(self):
+        '''
+            Returning private attribute
+        '''
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        '''
+            Setting private attribute
+        '''
+        self.setter_validation("height", value)
+        self.__height = value
+
+    @property
+    def x(self):
+        '''
+            Returning private attribute
+        '''
+        return self.__x
+
+    @x.setter
+    def x(self, value):
+        '''
+            Setting private attribute
+        '''
+        self.setter_validation("x", value)
+        self.__x = value
+
+    @property
+    def y(self):
+        '''
+            Returning private attribute
+        '''
+        return self.__y
+
+    @y.setter
+    def y(self, value):
+        '''
+            Setting private attribute
+        '''
+        self.setter_validation("y", value)
+        self.__y = value
 
     def area(self):
-        '''public_method area of rectangle
         '''
-        return self.__width * self.__height
+            Returns the area of the rectangle
+        '''
+        return (self.height * self.width)
 
     def display(self):
-        '''public method display self prints in stdout #
         '''
-        print("\n" * (self.__y), end="")
-        for i in range(self.__height):
-            print(" " * self.__x + "#" * self.__width)
+            Prints to stdout the representation of the rectangle
+        '''
+        rectangle = ""
+        print("\n" * self.y, end="")
+        for i in range(self.height):
+            rectangle += (" " * self.x) + ("#" * self.width) + "\n"
+        print(rectangle, end="")
+
+    def update(self, *args, **kwargs):
+        '''
+            Updates the arguments in the class
+        '''
+        if len(args) == 0:
+            for key, val in kwargs.items():
+                self.__setattr__(key, val)
+            return
+        try:
+            self.id = args[0]
+            self.width = args[1]
+            self.height = args[2]
+            self.x = args[3]
+            self.y = args[4]
+        except IndexError:
+            pass
+
+    def to_dictionary(self):
+        '''
+            Returns a dictionary representation of this class
+        '''
+        return {'x': getattr(self, "x"),
+                'y': getattr(self, "y"),
+                'id': getattr(self, "id"),
+                'height': getattr(self, "height"),
+                'width': getattr(self, "width")}
+
+    @staticmethod
+    def setter_validation(attribute, value):
+        if type(value) != int:
+            raise TypeError("{} must be an integer".format(attribute))
+        if attribute == "x" or attribute == "y":
+            if value < 0:
+                raise ValueError("{} must be >= 0".format(attribute))
+        elif value <= 0:
+            raise ValueError("{} must be > 0".format(attribute))
+
+    def __str__(self):
+        '''
+            Overwritting the str method
+        '''
+        return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.x, self.y,
+                                                       self.width, self.height)
