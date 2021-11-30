@@ -1,3 +1,2 @@
-##Welcome to this repository!
+# 0x0D. SQL - Introduction
 
-This repo contains higher level programming starting with Python.
