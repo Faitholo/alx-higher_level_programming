@@ -8,4 +8,4 @@ if (!isNaN(parseInt(process.argv[2]))) {
   }
 } else {
   console.log('Missing number of occurrences');
-}
+};
