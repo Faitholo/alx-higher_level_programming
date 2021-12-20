@@ -10,7 +10,7 @@ def get_states(username, password, db_name):
     db = MySQLdb.connect(host="localhost",
                          user=username,
                          passwd=password,
-                         db=hbtn_0e_0_usa,
+                         db=db_name,
                          port=3306)
 
     cursor = db.cursor()
