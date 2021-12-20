@@ -23,7 +23,7 @@ def get_states(username, password, db_name):
 
 if __name__ == "__main__":
     credentials = sys.argv
-    username = sys.argv[1]
-    passwd = sys.argv[2]
-    db_name = sys.argv[3]
+    username = sys.argv[0]
+    passwd = sys.argv[1]
+    db_name = sys.argv[2]
     get_states(username, passwd, db_name)
