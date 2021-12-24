@@ -1,20 +1,25 @@
 #!/usr/bin/python3
-import sys
-from relationship_state import State, Base
-from relationship_city import City
+"""
+script that lists all City objects
+from the database hbtn_0e_101_usa
+"""
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from relationship_state import Base, State
+from relationship_city import City
+from sys import argv
+
 
 if __name__ == "__main__":
-    connection = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
-    user_name = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    engine = create_engine(connection.format(user_name, password, db_name))
+    e = 'mysql+mysqldb://{}:{}@localhost/{}'.format(argv[1],
+                                                    argv[2],
+                                                    argv[3])
+    engine = create_engine(e)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
-    session = Session()
-    query = session.query(City).order_by(City.id).all()
-    for row in query:
-            print("{}: {} -> {}".format(row.id, row.name, row.state.name))
-    session.close()
+    s = Session()
+    cities = s.query(City).all()
+    for city in cities:
+        print("{}: {} -> {}".format(city.id, city.name, city.state.name))
+    s.close()

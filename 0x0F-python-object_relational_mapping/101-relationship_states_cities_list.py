@@ -1,21 +1,27 @@
 #!/usr/bin/python3
-import sys
-from relationship_state import State, Base
+"""
+All states via SQLAlchemy
+"""
+from sys import argv
+from relationship_state import Base, State
 from relationship_city import City
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import Session
 
 if __name__ == "__main__":
-    connection = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
-    user_name = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    engine = create_engine(connection.format(user_name, password, db_name))
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
+                           format(argv[1], argv[2], argv[3]),
+                           pool_pre_ping=True)
     Base.metadata.create_all(engine)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    query = session.query(State).order_by(State.id).all()
-    for row in query:
+
+    session = Session(engine)
+
+    data = session.query(State).order_by(State.id).all()
+
+    for row in data:
         print("{}: {}".format(row.id, row.name))
-        for related_row in row.cities:
-            print("\t{}: {}".format(related_row.id, related_row.name))
+        for city in row.cities:
+            print("    {}: {}".format(city.id, city.name))
+
+    session.commit()
+    session.close()

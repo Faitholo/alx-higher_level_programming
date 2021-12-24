@@ -1,20 +1,25 @@
 #!/usr/bin/python3
-import sys
-from model_state import Base, State
+"""
+All states via SQLAlchemy
+"""
+
+from sys import argv
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from model_state import Base, State
 
 if __name__ == "__main__":
-    user_name = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-    connection = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
-    eng = create_engine(connection.format(user_name, password, db_name),
-                        pool_pre_ping=True)
-    Session = sessionmaker(bind=eng)
+    engine = create_engine(
+            'mysql+mysqldb://{}:{}@localhost/{}'.format(argv[1],
+                                                        argv[2],
+                                                        argv[3]))
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
     session = Session()
-    item = session.query(State).first()
-    if item is None:
-        print("Nothing")
+    state = session.query(State).order_by(State.id).first()
+    if state:
+        print("{}: {}".format(state.id, state.name))
     else:
-        print("{}: {}".format(item.id, item.name))
+        print("Nothing")
+    session.close()

@@ -1,33 +1,21 @@
 #!/usr/bin/python3
-import sys
+
+
 import MySQLdb
+from sys import argv
 
-
-def get_states(username, password, db_name, search_value):
-    '''
-        ll values in the states table where name matches the argument
-    '''
-    db = MySQLdb.connect(host="localhost",
-                         user=username,
-                         passwd=password,
-                         db=db_name,
-                         port=3306)
-
-    cursor = db.cursor()
-    bad_query = "SELECT * FROM states WHERE name=('{}')\
-                 ORDER BY id ASC".format(search_value)
-    cursor.execute(bad_query)
-    rows = cursor.fetchall()
-    for row in rows:
-        if (row[1] == search_value):
-            print(row)
-    cursor.close()
-    db.close()
-
+'''
+Script that lists all states from the database
+'''
 if __name__ == "__main__":
-    credentials = sys.argv
-    username = sys.argv[1]
-    passwd = sys.argv[2]
-    db_name = sys.argv[3]
-    search_value = sys.argv[4]
-    get_states(username, passwd, db_name, search_value)
+    cont = MySQLdb.connect(
+        host="localhost", port=3306, user=argv[1],
+        password=argv[2], database=argv[3])
+    cursor = cont.cursor()
+    cursor.execute(
+            "SELECT * FROM states WHERE name LIKE"
+            " '{:s}' ORDER BY id ASC".format(argv[4]))
+    db = cursor.fetchall()
+    for i in db:
+        if i[1] == argv[4]:
+            print(i)
