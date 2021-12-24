@@ -1,29 +1,22 @@
 #!/usr/bin/python3
-import sys
+from sys import argv
 import MySQLdb
 
+if __name__ == '__main__':
 
-def get_states(username, password, db_name):
-    '''
-        List all the states in the given database
-    '''
-    db = MySQLdb.connect(host="localhost",
-                         user=username,
-                         passwd=password,
-                         db=db_name,
-                         port=3306)
+    db_user = argv[1]
+    db_passwd = argv[2]
+    db_name = argv[3]
 
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM `states` ORDER BY id ASC")
-    rows = cursor.fetchall()
-    for row in rows:
+    database = MySQLdb.connect(host='localhost',
+                               port=3306,
+                               user=db_user,
+                               passwd=db_passwd,
+                               db=db_name)
+
+    cursor = database.cursor()
+
+    cursor.execute('SELECT id, name FROM states ORDER BY states.id ASC')
+
+    for row in cursor.fetchall():
         print(row)
-    cursor.close()
-    db.close()
-
-if __name__ == "__main__":
-    credentials = sys.argv
-    username = sys.argv[0]
-    passwd = sys.argv[1]
-    db_name = sys.argv[2]
-    get_states(username, passwd, db_name)
