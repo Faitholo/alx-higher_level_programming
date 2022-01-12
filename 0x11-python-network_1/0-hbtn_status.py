@@ -2,9 +2,11 @@
 """A script that
 fetches https://intranet.hbtn.io/status.
 """
-from urllib.request import Request, urlopen
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
+    import urllib.request
+
     with urllib.request.urlopen('https://intranet.hbtn.io/status') as resp:
         content = resp.read()
         print("Body response:")
