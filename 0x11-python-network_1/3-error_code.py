@@ -3,6 +3,7 @@
 Script that takes in a URL, send a request to URL, and dispaly body
 """
 
+
 if __name__ == "__main__":
     import sys
     from urllib import request, error
