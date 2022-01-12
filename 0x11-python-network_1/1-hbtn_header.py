@@ -7,6 +7,7 @@ And displays the value of the X-Request-Id variable found in the header ofthe re
 import sys
 import urllib.request
 
+
 if __name__ == "__main__":
     url = sys.argv[1]
 
