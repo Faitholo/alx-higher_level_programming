@@ -12,7 +12,7 @@ request(reqURL, function (error, response, body) {
     let dash = {};
     for (let i = 0; i < todos.length; i++) {
       let status = (todos[i]['completed']);
-      let key = to_do[i]['userId'].toString();
+      let key = todos[i]['userId'].toString();
       if (status) {
         if (dash[key]) {
           dash[key]++;
