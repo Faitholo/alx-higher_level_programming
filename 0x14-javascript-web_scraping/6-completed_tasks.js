@@ -8,10 +8,10 @@ request(reqURL, function (error, response, body) {
   if (error) {
     console.log('error:', error);
   } else {
-    let to_do = JSON.parse(body);
+    let todos = JSON.parse(body);
     let dash = {};
-    for (let i = 0; i < to_do.length; i++) {
-      let status = (to_do[i]['completed']);
+    for (let i = 0; i < todos.length; i++) {
+      let status = (todos[i]['completed']);
       let key = to_do[i]['userId'].toString();
       if (status) {
         if (dash[key]) {
